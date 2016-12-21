@@ -14,6 +14,8 @@ J = 0;
 %               You should set J to the cost.
 
 
+A = X*theta;
+J = (1/(2*m))*sum((A-y).^2);
 
 
 
