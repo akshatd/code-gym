@@ -15,9 +15,10 @@ J = 0;
 
 
 A = X*theta;
-J = (1/(2*m))*sum((A-y).^2);
-
-
+A = A-y;
+J = (1/(2*m))*(A*A');
+% Element wise sum is the same as multiplying together both cos theyre
+% 1 X m and m X 1, so will cause all the elements to multiply by themselves
 
 % =========================================================================
 
