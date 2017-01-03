@@ -11,13 +11,11 @@ figure; hold on;
 %               2D plot, using the option 'k+' for the positive
 %               examples and 'ko' for the negative examples.
 %
-
-
-
-
-
-
-
+ p = X(find(y==1), :);
+ n = X(find(y==0), :);
+ 
+ plot(p(:,1), p(:,2), 'k+');
+ plot(n(:,1), n(:,2), 'ko');
 
 
 % =========================================================================
