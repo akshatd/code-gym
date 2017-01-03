@@ -23,7 +23,7 @@ grad = zeros(size(theta));
 A = X*theta;
 h = sigmoid(A);
 % simply follow the formula, sum is just multiplying with transpose
-J = (1/m)*((-y'*log(h)) - ((1-y)'*log(1-h)))
+J = (1/m)*((-y'*log(h)) - ((1-y)'*log(1-h)));
 % grad must be nx1, so nXm and mX1 needed.
 % try it out, should be understandable
 grad = (1/m)*(X'*(h-y));
