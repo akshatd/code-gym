@@ -21,13 +21,15 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-
-
-
-
-
-
-
+% add a column of 1, since features are in columns(5000x400)
+a1 = [ones(m,1) X];
+z2 = sigmoid(Theta1*a1');
+% add a roe of 1, since features are in rows(25x5000)
+z2 = [ones(1,m);z2];
+% again no need to do sigmoid in the last step since the largest value
+% will be a huge number anyway
+[val, p] = max(Theta2*z2);
+p=p';
 
 % =========================================================================
 
