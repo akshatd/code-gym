@@ -29,6 +29,8 @@ m = size(X, 1);
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
+% create y as a m*k matrix where k is the number of classes
+
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -60,9 +62,20 @@ Theta2_grad = zeros(size(Theta2));
 %               backpropagation. That is, you can compute the gradients for
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
-%
 
-
+% following the nn diagram
+a1 = [ones(m,1), X];
+z2 = a1*Theta1';
+size(z2);
+a2 = [ones(m,1),sigmoid(z2)];
+z3 = a2*Theta2';
+size(z3);
+a3 = sigmoid(z3);
+h = a3;
+size(h);
+% just sum over all the classes
+J = (1/m)*sum((-y'*log(h)) - ((1-y)'*log(1-h)));
+  
 
 
 
