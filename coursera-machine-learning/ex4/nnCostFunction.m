@@ -24,7 +24,13 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
+X = [ones(m,1), X];
+Y = zeros(num_labels,m);
+% make Y such that it has a 1 in place of the class
+% 10x5000 as per pdf's requirement
+for i=1:m
+  Y((y(i)), i) = 1;
+end
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
@@ -63,18 +69,17 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 
-% following the nn diagram
-a1 = [ones(m,1), X];
-z2 = a1*Theta1';
-size(z2);
-a2 = [ones(m,1),sigmoid(z2)];
-z3 = a2*Theta2';
-size(z3);
+% following the nn diagram, do normal forward
+a1 = X; % 5000x401
+z2 = a1*Theta1'; % 5000x25
+a2 = [ones(m,1),sigmoid(z2)]; % 5000x26
+z3 = a2*Theta2'; % 5000x10
 a3 = sigmoid(z3);
-h = a3;
-size(h);
-% just sum over all the classes
-J = (1/m)*sum((-y'*log(h)) - ((1-y)'*log(1-h)));
+h = a3; % 5000x10
+% Y is 10x5000 as per the pdf requirement
+% just sum over all the classes and all the examples
+% twice cos matrix is 2-dim and i was lazy
+J = sum((1/m)*sum((-Y'.*log(h)) - ((1-Y)'.*log(1-h))));
   
 
 
