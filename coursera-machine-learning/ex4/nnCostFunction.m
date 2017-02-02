@@ -80,8 +80,12 @@ h = a3; % 5000x10
 % just sum over all the classes and all the examples
 % twice cos matrix is 2-dim and i was lazy
 J = sum((1/m)*sum((-Y'.*log(h)) - ((1-Y)'.*log(1-h))));
-  
-
+% regularizing
+T1 = Theta1(:,2:end);
+T2 = Theta2(:,2:end);
+% use the vectorization trick to square
+%J = J+ (lambda/(2*m))*(sum(sum(T1.^2)) + sum(sum(T2.^2)));
+J = J+ (lambda/(2*m))*(sum(sum(T1*T1')) + sum(sum(T2*T2')));
 
 
 
