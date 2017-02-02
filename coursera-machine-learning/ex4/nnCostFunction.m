@@ -101,20 +101,9 @@ Theta1_grad = (1/m)*delta1;
 % if not vectorized, we could just add the 10x26 and 25x401
 % matrices together to get just 2 partial derivative matrices
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% regularization
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + (lambda/m)*Theta2(:, 2:end);
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + (lambda/m)*Theta1(:, 2:end);
 
 % -------------------------------------------------------------
 
