@@ -25,18 +25,16 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 % Setup some useful variables
 m = size(X, 1);
 X = [ones(m,1), X];
-Y = zeros(num_labels,m);
+Y = zeros(m, num_labels);
 % make Y such that it has a 1 in place of the class
 % 10x5000 as per pdf's requirement
 for i=1:m
-  Y((y(i)), i) = 1;
+  Y(i, (y(i))) = 1;
 end
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
-% create y as a m*k matrix where k is the number of classes
-
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -74,18 +72,34 @@ a1 = X; % 5000x401
 z2 = a1*Theta1'; % 5000x25
 a2 = [ones(m,1),sigmoid(z2)]; % 5000x26
 z3 = a2*Theta2'; % 5000x10
-a3 = sigmoid(z3);
+a3 = sigmoid(z3); % 5000x10
 h = a3; % 5000x10
 % Y is 10x5000 as per the pdf requirement
 % just sum over all the classes and all the examples
 % twice cos matrix is 2-dim and i was lazy
-J = sum((1/m)*sum((-Y'.*log(h)) - ((1-Y)'.*log(1-h))));
+J = sum((1/m)*sum((-Y.*log(h)) - ((1-Y).*log(1-h))));
 % regularizing
 T1 = Theta1(:,2:end);
 T2 = Theta2(:,2:end);
 % use the vectorization trick to square
 J = J+ (lambda/(2*m))*(sum(sum(T1.^2)) + sum(sum(T2.^2)));
 %J = J+ (lambda/(2*m))*(sum(sum(T1*T1')) + sum(sum(T2*T2')));
+
+% Theta1 has size 25 x 401
+% Theta2 has size 10 x 26
+
+% just do over all the exampless!
+% otherwise it would have been a 1 instead of 5000
+d3 = a3-Y; % 5000x10
+d2 = (d3*Theta2) .* [ones(m,1) sigmoidGradient(z2)]; % 5000x26
+d2 = d2(:, 2:end); % 5000x25
+delta2 = d3' * a2; % 10x26, p derivative of Theta 2
+Theta2_grad = (1/m)*delta2;
+delta1 = d2' * a1; % 25x401 p derivative of Theta 1
+Theta1_grad = (1/m)*delta1;
+
+% if not vectorized, we could just add the 10x26 and 25x401
+% matrices together to get just 2 partial derivative matrices
 
 
 
