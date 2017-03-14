@@ -16,6 +16,7 @@ X_poly = zeros(numel(X), p);
 
 X_poly(:,1) = X;
 for i=2:p
+  % keep multiplying X with the prev to get the next
   X_poly(:,i) = X(:,1).*X_poly(:,i-1);
 end
 

@@ -39,6 +39,13 @@ error_val = zeros(length(lambda_vec), 1);
 %
 %
 
+for i=1:length(lambda_vec)
+  % get best theta given lambda
+   theta = trainLinearReg(X, y, lambda_vec(i));
+  % get train/val error with lambda 
+  [error_train(i), g_train] = linearRegCostFunction(X, y, theta, 0);
+  [error_val(i), g_val] = linearRegCostFunction(Xval, yval, theta, 0);
+end
 
 
 

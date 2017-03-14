@@ -54,7 +54,9 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 for i=1:m
+  % get params for examples
   theta = trainLinearReg(X(1:i,:), y(1:i,:), lambda);
+  % get training subset error with lambda 0 as we dont wanna see regularised values
   [error_train(i), g_train] = linearRegCostFunction(X(1:i,:), y(1:i), theta, 0);
   [error_val(i), g_val] = linearRegCostFunction(Xval, yval, theta, 0);
 end
