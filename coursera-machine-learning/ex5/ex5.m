@@ -225,4 +225,17 @@ pause;
 fprintf('Test set error is %f\n', Jtest);
 
 %% Part 10(3.5) Plotting learning curves with randomly selected examples
+lambda = 0.01;
 
+[error_train, error_val] = ...
+    learningCurveRandom(X_poly, y, X_poly_val, yval, lambda);
+plot(1:m, error_train, 1:m, error_val);
+
+title(sprintf('Polynomial Regression Random Learning Curve (lambda = %f)', lambda));
+xlabel('Number of training examples')
+ylabel('Error')
+axis([0 13 0 100])
+legend('Train', 'Cross Validation')
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
